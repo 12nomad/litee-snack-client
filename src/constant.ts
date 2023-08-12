@@ -1,0 +1,13 @@
+export const USER_CACHE_KEY = ['user'];
+export const CATEGORIES_CACHE_KEY = ['categories'];
+export const PROMOTED_SHOPS_KEY = ['promoted_shops'];
+export const SHOPS_CACHE_KEY = 'shops';
+export const SHOP_CACHE_KEY = 'shop';
+export const OWNER_SHOPS_CACHE_KEY = ['owner_shops'];
+export const OWNER_SHOP_CACHE_KEY = 'owner_shop';
+export const OWNER_PAYMENTS = 'owner_payments';
+export const ORDERS_PAYMENTS = 'orders_payments';
+export const ORDER_DETAIL = 'order_detail';
+export const SHOP_ORDER_DETAIL = 'shop_order_detail';
+export const DELIVERY_ORDER_DETAIL = 'delivery_order_detail';
+export const SHOP_ORDERS = 'shop_orders';
