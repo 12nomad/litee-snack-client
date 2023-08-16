@@ -1,7 +1,7 @@
 import { Dropdown } from 'flowbite-react';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { BiTask } from 'react-icons/bi';
 
 import { OrderStatus } from '../../../../gql/generated/graphql';
