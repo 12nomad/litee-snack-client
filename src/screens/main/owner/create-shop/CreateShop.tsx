@@ -62,6 +62,7 @@ const CreateShop = () => {
 
     if (currentCategory.length < 1) {
       setCurrentCategoryError('Select at least one category...');
+      setuploadState({ uploadError: '', uploadLoading: false });
       return;
     }
 

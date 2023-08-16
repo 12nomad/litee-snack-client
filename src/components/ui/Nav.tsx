@@ -134,9 +134,11 @@ const Nav = () => {
               <Link to="/dashboard">
                 <Dropdown.Item>Dashboard</Dropdown.Item>
               </Link>
-              <Link to="/profile">
-                <Dropdown.Item>Profile</Dropdown.Item>
-              </Link>
+              {user?.role === Role.Shop && (
+                <Link to="/profile">
+                  <Dropdown.Item>Profile</Dropdown.Item>
+                </Link>
+              )}
               {!user?.verified && (
                 <Link to="/verify-account">
                   <Dropdown.Item className="text-red-700 font-bold flex items-center gap-1 ">

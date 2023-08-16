@@ -162,6 +162,7 @@ export type GetOrderDto = {
 
 export type GetOrdersDto = {
   page?: Scalars['Int']['input'];
+  shopId?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<OrderStatus>;
 };
 

@@ -15,14 +15,12 @@ const client = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={client}>
-      {/* <ApolloProvider client={apollo}> */}
       <BrowserRouter>
         <HelmetProvider>
           <App />
           <ReactQueryDevtools />
         </HelmetProvider>
       </BrowserRouter>
-      {/* </ApolloProvider> */}
     </QueryClientProvider>
     ,
   </React.StrictMode>,

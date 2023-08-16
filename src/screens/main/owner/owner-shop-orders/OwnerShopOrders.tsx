@@ -20,7 +20,7 @@ const OwnerShopOrders = () => {
     OrderStatus.Pending | OrderStatus.Preparing
   >(OrderStatus.Pending);
   const { data, error, isLoading } = queryService.getOrders({
-    getOrdersInput: { status },
+    getOrdersInput: { status, shopId: +params.shopId },
   });
 
   if (isLoading) return <Loading />;
