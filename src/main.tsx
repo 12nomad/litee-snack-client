@@ -22,6 +22,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         </HelmetProvider>
       </BrowserRouter>
     </QueryClientProvider>
-    ,
   </React.StrictMode>,
 );
