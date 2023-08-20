@@ -188,7 +188,7 @@ const Shops = () => {
           >
             {isLoading && <Spinner color="failure" />}
             {error && <ErrorHandler error={error} />}
-            {data?.getShops.data && data?.getShops.data.length > 0 ? (
+            {!isLoading && data && data?.getShops.data && data?.getShops.data.length > 0 && (
               data?.getShops.data.map((shop) => (
                 <div
                   key={shop.id}
@@ -220,7 +220,8 @@ const Shops = () => {
                   </div>
                 </div>
               ))
-            ) : (
+            )} 
+            {!isLoading && data && data?.getShops.data && data?.getShops.data.length === 0 && (
               <p className="ml-1">No shops found...</p>
             )}
           </div>
