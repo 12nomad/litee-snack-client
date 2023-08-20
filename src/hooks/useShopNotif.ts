@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import useNotificationStore from '../stores/notification.store';
-import { PENDING_ORDER } from '../gql/subscriptions/pending-order.subscription';
-import { PendingOrderSubscription } from '../gql/generated/graphql';
-import subscriptionClient from '../utils/graphql-subscription-client';
+import subscriptionService from '../services/subscription.service';
 
 const useShopNotif = () => {
   const pendingOrder = useNotificationStore((s) => s.pendingOrder);
@@ -23,19 +21,10 @@ const useShopNotif = () => {
   // );
 
   useEffect(() => {
-    const subscription = subscriptionClient
-      .request({ query: PENDING_ORDER })
-      .subscribe({
-        next({ data }: { data: PendingOrderSubscription }) {
-          if (data) {
-            setPendingOrder({
-              orderId: (data.pendingOrder && data.pendingOrder.id) || 0,
-              shopId: (data.pendingOrder && data.pendingOrder.shopId) || 0,
-            });
-            setNewNotif(true);
-          }
-        },
-      });
+    const subscription = subscriptionService.shopNotif(
+      setNewNotif,
+      setPendingOrder,
+    );
 
     return () => {
       subscription.unsubscribe();

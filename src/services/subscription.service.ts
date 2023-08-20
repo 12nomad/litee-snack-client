@@ -4,8 +4,9 @@ import ClientService from './client.service';
 import {
   OrderStatusSubscriptionVariables,
   OrderStatusSubscription,
+  PendingOrderSubscription,
 } from '../gql/generated/graphql';
-import { ORDER_STATUS } from '../gql/subscriptions';
+import { ORDER_STATUS, PENDING_ORDER } from '../gql/subscriptions';
 
 class SubscriptionService extends ClientService {
   constructor() {
@@ -27,6 +28,23 @@ class SubscriptionService extends ClientService {
           }
         },
       });
+  }
+
+  shopNotif(
+    setNewNotif: (val: boolean) => void,
+    setPendingOrder: (val: { orderId: number; shopId: number }) => void,
+  ) {
+    return this.subscriptionClient.request({ query: PENDING_ORDER }).subscribe({
+      next({ data }: { data: PendingOrderSubscription }) {
+        if (data) {
+          setPendingOrder({
+            orderId: (data.pendingOrder && data.pendingOrder.id) || 0,
+            shopId: (data.pendingOrder && data.pendingOrder.shopId) || 0,
+          });
+          setNewNotif(true);
+        }
+      },
+    });
   }
 }
 
