@@ -1,1 +1,1 @@
-# litee-snack-client (nestjs server in liter-app repository) 
+# litee-snack-client (nestjs server in snack repository) 
