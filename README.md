@@ -1,1 +1,1 @@
-# litee-snack-client (nestjs server in litee-snack repository) 
+# Litee Snack Client (nestjs server 👉 [Litee Snack Server](https://github.com/12nomad/litee-snack)) 
