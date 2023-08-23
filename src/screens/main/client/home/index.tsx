@@ -1,26 +1,27 @@
-import { useState } from 'react';
-import { Badge, Carousel, Pagination, Spinner } from 'flowbite-react';
-import { MdOutlineLocationOn } from 'react-icons/md';
-import { AiTwotoneShop } from 'react-icons/ai';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Badge, Carousel, Pagination, Spinner } from "flowbite-react";
+import { MdOutlineLocationOn } from "react-icons/md";
+import { AiTwotoneShop } from "react-icons/ai";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Helmet } from "react-helmet-async";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   SearchShopValidationSchema,
   searchShopValidationSchema,
-} from '../../../../schemas/shop.schema';
-import ErrorHandler from '../../../../components/ui/ErrorHandler';
-import SearchBar from '../../../../components/ui/SearchBar';
-import queryService from '../../../../services/query.service';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
-import ShopHeader from '../../../../components/ui/ShopHeader';
+} from "../../../../schemas/shop.schema";
+import ErrorHandler from "../../../../components/ui/ErrorHandler";
+import SearchBar from "../../../../components/ui/SearchBar";
+import queryService from "../../../../services/query.service";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
+import ShopHeader from "../../../../components/ui/ShopHeader";
+import CardLoading from "./components/CardLoading";
 
 const Shops = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentCategory, setCurrentCategory] = useState('');
-  const [currentSearch, setCurrentSearch] = useState('');
+  const [currentCategory, setCurrentCategory] = useState("");
+  const [currentSearch, setCurrentSearch] = useState("");
 
   const navigate = useNavigate();
 
@@ -52,19 +53,19 @@ const Shops = () => {
   });
 
   const onCategoryChange = (slug: string) => {
-    setCurrentSearch('');
+    setCurrentSearch("");
     setCurrentPage(1);
     setCurrentCategory(slug);
   };
 
   const onReset = () => {
-    setCurrentSearch('');
-    setCurrentCategory('');
+    setCurrentSearch("");
+    setCurrentCategory("");
     setCurrentPage(1);
   };
 
   const onSubmit = ({ search }: SearchShopValidationSchema) => {
-    setCurrentCategory('');
+    setCurrentCategory("");
     setCurrentPage(1);
     setCurrentSearch(search);
     reset();
@@ -80,7 +81,7 @@ const Shops = () => {
         {promoLoading && (
           <Spinner
             color="failure"
-            className="flex justify-center items-center w-full"
+            className="flex justify-center items-center w-full mb-6"
           />
         )}
         {promoError && <ErrorHandler error={promoError} />}
@@ -97,9 +98,9 @@ const Shops = () => {
                 {promoData.getPromotedShops.data.map((el) => (
                   <Link to={`/${el.id}`} key={el.id}>
                     <ShopHeader
-                      address={el.address || ''}
-                      image={el.image || ''}
-                      name={el.name || ''}
+                      address={el.address || ""}
+                      image={el.image || ""}
+                      name={el.name || ""}
                       categories={el.categories}
                     />
                   </Link>
@@ -138,7 +139,7 @@ const Shops = () => {
                   <img
                     src={
                       category.image ||
-                      'https://cdn-icons-png.flaticon.com/512/3937/3937089.png'
+                      "https://cdn-icons-png.flaticon.com/512/3937/3937089.png"
                     }
                     alt={category.name}
                     className="w-8 h-8 mx-auto"
@@ -155,12 +156,12 @@ const Shops = () => {
         <>
           <div className="relative">
             <h2 className="text-2xl font-bold mt-12 mb-6 flex items-center gap-1">
-              <AiTwotoneShop size={25} />{' '}
+              <AiTwotoneShop size={25} />{" "}
               {currentCategory
                 ? `"${currentCategory}" Shops`
                 : currentSearch
                 ? `"${currentSearch}" Shops`
-                : 'All Shops'}
+                : "All Shops"}
               {(currentCategory || currentSearch) && (
                 <span
                   className="hidden md:block cursor-pointer text-rusty-red"
@@ -182,22 +183,27 @@ const Shops = () => {
             </span>
           )}
 
-          {/* ${isLoading ? 'grid-cols-1 text-center' : 'grid-cols-4'} */}
           <div
             className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4`}
           >
-            {isLoading && <Spinner color="failure" />}
+            {isLoading &&
+              Array.from({ length: 3 }, (_, idx) => (
+                <CardLoading key={idx} />
+              )).map((el) => el)}
             {error && <ErrorHandler error={error} />}
-            {!isLoading && data && data?.getShops.data && data?.getShops.data.length > 0 && (
+            {!isLoading &&
+              data &&
+              data?.getShops.data &&
+              data?.getShops.data.length > 0 &&
               data?.getShops.data.map((shop) => (
                 <div
                   key={shop.id}
-                  className="max-w-sm cursor-pointer bg-white border border-gray-200 rounded-sm shadow"
+                  className="max-w-sm cursor-pointer bg-white border border-gray-200 rounded-md shadow"
                   onClick={() => navigate(`/${shop.id}`)}
                 >
                   <img
-                    className="rounded-t-sm w-[100%] h-48 object-cover"
-                    src={shop.image || 'https://placehold.co/600x400'}
+                    className="rounded-t-md w-[100%] h-48 object-cover"
+                    src={shop.image || "https://placehold.co/600x400"}
                     alt={shop.name}
                   />
                   <div className="px-4 py-4 align-center">
@@ -214,16 +220,18 @@ const Shops = () => {
                     </h5>
                     <div className="w-full h-[1px] bg-slate-200 mt-2 mb-1"></div>
                     <p className=" font-normal text-gray-700 flex items-center">
-                      <MdOutlineLocationOn size={17} />{' '}
+                      <MdOutlineLocationOn size={17} />{" "}
                       <span>{shop.address}</span>
                     </p>
                   </div>
                 </div>
-              ))
-            )} 
-            {!isLoading && data && data?.getShops.data && data?.getShops.data.length === 0 && (
-              <p className="ml-1">No shops found...</p>
-            )}
+              ))}
+            {!isLoading &&
+              data &&
+              data?.getShops.data &&
+              data?.getShops.data.length === 0 && (
+                <p className="ml-1">No shops found...</p>
+              )}
           </div>
         </>
 
@@ -243,7 +251,7 @@ const Shops = () => {
               nextLabel=""
             />
             <p className="text-sm text-center mt-2">
-              Page <span className="font-bold">{currentPage}</span> of{' '}
+              Page <span className="font-bold">{currentPage}</span> of{" "}
               {data?.getShops.totalItems
                 ? Math.ceil(data?.getShops.totalItems / 10)
                 : 0}

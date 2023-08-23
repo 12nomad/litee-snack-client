@@ -1,20 +1,19 @@
-import { Helmet } from 'react-helmet-async';
-import { Navigate, useParams } from 'react-router-dom';
-import { Spinner } from 'flowbite-react';
+import { Helmet } from "react-helmet-async";
+import { Navigate, useParams } from "react-router-dom";
+import { Spinner } from "flowbite-react";
 
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
-import queryService from '../../../../services/query.service';
-import Loading from '../../../../components/ui/Loading';
-import ErrorHandler from '../../../../components/ui/ErrorHandler';
-import mutationService from '../../../../services/mutation.service';
-import { OrderStatus } from '../../../../gql/generated/graphql';
-import getErrorMessage from '../../../../utils/get-error-message.util';
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
+import queryService from "../../../../services/query.service";
+import Loading from "../../../../components/ui/Loading";
+import ErrorHandler from "../../../../components/ui/ErrorHandler";
+import mutationService from "../../../../services/mutation.service";
+import { OrderStatus } from "../../../../gql/generated/graphql";
+import getErrorMessage from "../../../../utils/get-error-message.util";
 
 const DeliveryDetail = () => {
   const params = useParams<{ orderId: string }>();
 
-  if (!params.orderId || !Boolean(parseInt(params.orderId)))
-    return <Navigate to="/" replace />;
+  if (!params.orderId) return <Navigate to="/" replace />;
 
   const { data, isLoading, error } = queryService.deliveryOrderDetail({
     deliveryOrderDetailInput: { id: +params.orderId },
@@ -26,7 +25,7 @@ const DeliveryDetail = () => {
   } = mutationService.editOrder(
     data?.deliveryOrderDetail.data?.status,
     undefined,
-    { deliveryOrderDetailInput: { id: +params.orderId } },
+    { deliveryOrderDetailInput: { id: +params.orderId } }
   );
 
   if (isLoading) return <Loading />;
@@ -34,7 +33,7 @@ const DeliveryDetail = () => {
   if (error) return <ErrorHandler error={error} />;
 
   const onOrderStatusChange = (val: OrderStatus) => {
-    if (window.confirm('Are you sure?'))
+    if (window.confirm("Are you sure?"))
       mutate({ editOrderInput: { id: +params.orderId!, status: val } });
   };
 
@@ -52,11 +51,11 @@ const DeliveryDetail = () => {
         <div className="m-4">
           <div className="relative">
             <p className="mt-4">
-              <span className="font-medium">Shop:</span>{' '}
+              <span className="font-medium">Shop:</span>{" "}
               {data.deliveryOrderDetail.data?.shop?.name}
             </p>
             <p>
-              <span className="font-medium">Customer:</span>{' '}
+              <span className="font-medium">Customer:</span>{" "}
               {data.deliveryOrderDetail.data?.customer?.name}
             </p>
             <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-slate-400"></div>
@@ -68,7 +67,7 @@ const DeliveryDetail = () => {
                 className="py-2 mx-auto rounded-sm bg-night-black text-white w-full inline-block font-bold"
                 onClick={() => onOrderStatusChange(OrderStatus.Picked)}
               >
-                {editOrderLoading ? <Spinner color="failure" /> : 'Pick Order'}
+                {editOrderLoading ? <Spinner color="failure" /> : "Pick Order"}
               </button>
             )}
             {data.deliveryOrderDetail.data?.status === OrderStatus.Picked && (
@@ -79,7 +78,7 @@ const DeliveryDetail = () => {
                 {editOrderLoading ? (
                   <Spinner color="failure" />
                 ) : (
-                  'Order Delivered'
+                  "Order Delivered"
                 )}
               </button>
             )}
@@ -91,7 +90,7 @@ const DeliveryDetail = () => {
             )}
             {editOrderError && (
               <p role="alert" className="text-xs text-rose-700 mt-2 font-bold">
-                <sup>*</sup>{' '}
+                <sup>*</sup>{" "}
                 {getErrorMessage(editOrderError.response.errors).message}
               </p>
             )}

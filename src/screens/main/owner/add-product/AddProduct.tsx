@@ -1,44 +1,40 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Tooltip } from 'flowbite-react';
-import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { FieldValues, useFieldArray, useForm } from 'react-hook-form';
-import { IoMdAddCircleOutline } from 'react-icons/io';
-import { TiDelete } from 'react-icons/ti';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Tooltip } from "flowbite-react";
+import { useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { FieldValues, useFieldArray, useForm } from "react-hook-form";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { TiDelete } from "react-icons/ti";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 import {
   AddProductValidationSchema,
   addProductValidationSchema,
-} from '../../../../schemas/shop.schema';
-import { uploadImage } from '../../../../utils/cloudinary.util';
-import mutationService from '../../../../services/mutation.service';
-import SubmitButton from '../../../../components/form/SubmitButton';
-import { IFormField } from '../../../../interfaces/form-fields.interface';
-import Input from '../../../../components/form/Input';
-import ImageInput from '../../../../components/form/ImageInput';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
+} from "../../../../schemas/shop.schema";
+import { uploadImage } from "../../../../utils/cloudinary.util";
+import mutationService from "../../../../services/mutation.service";
+import SubmitButton from "../../../../components/form/SubmitButton";
+import { IFormField } from "../../../../interfaces/form-fields.interface";
+import Input from "../../../../components/form/Input";
+import ImageInput from "../../../../components/form/ImageInput";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
 
 const addProductFields: IFormField<FieldValues>[] = [
   {
-    label: 'Name: ',
-    name: 'name',
+    label: "Name: ",
+    name: "name",
   },
   {
-    label: 'Description: ',
-    name: 'description',
+    label: "Description: ",
+    name: "description",
   },
 ];
 
 const AddProduct = () => {
   const params = useParams<{ shopId: string }>();
-
-  if (!params.shopId || !Boolean(parseInt(params.shopId)))
-    return <Navigate to="/" replace />;
-
   const [uploadState, setuploadState] = useState({
     uploadLoading: false,
-    uploadError: '',
+    uploadError: "",
   });
   const navigate = useNavigate();
 
@@ -54,8 +50,10 @@ const AddProduct = () => {
   });
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'options',
+    name: "options",
   });
+
+  if (!params.shopId) return <Navigate to="/" replace />;
 
   const onSuccess = () => {
     reset();
@@ -70,7 +68,7 @@ const AddProduct = () => {
     price,
     options,
   }: AddProductValidationSchema) => {
-    setuploadState({ uploadError: '', uploadLoading: true });
+    setuploadState({ uploadError: "", uploadLoading: true });
 
     let currentImage: string | undefined;
     if (image instanceof FileList && image.length > 0) {
@@ -83,7 +81,7 @@ const AddProduct = () => {
       currentImage = data?.url;
     } else {
       setuploadState({
-        uploadError: 'Please upload a shop image...',
+        uploadError: "Please upload a shop image...",
         uploadLoading: false,
       });
       return;
@@ -120,11 +118,11 @@ const AddProduct = () => {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="grid place-items-center">
-                  {watch('image') &&
-                    watch('image') instanceof FileList &&
-                    watch('image').length > 0 && (
+                  {watch("image") &&
+                    watch("image") instanceof FileList &&
+                    watch("image").length > 0 && (
                       <img
-                        src={URL.createObjectURL(watch('image')[0])}
+                        src={URL.createObjectURL(watch("image")[0])}
                         alt="shop image"
                         className="rounded-full w-32 h-32  object-cover"
                       />
@@ -161,11 +159,11 @@ const AddProduct = () => {
                     id="price"
                     className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 ${
                       errors.price?.message
-                        ? 'focus:ring-rose-700 focus:border-rose-700'
-                        : 'focus:ring-sky-700 focus:border-sky-700'
+                        ? "focus:ring-rose-700 focus:border-rose-700"
+                        : "focus:ring-sky-700 focus:border-sky-700"
                     }`}
                     placeholder="••••••••"
-                    {...register('price', { valueAsNumber: true, min: 0 })}
+                    {...register("price", { valueAsNumber: true, min: 0 })}
                   />
                   {errors.price?.message && (
                     <p role="alert" className="text-xs text-rose-700 mt-2">
@@ -178,7 +176,7 @@ const AddProduct = () => {
                 <div>
                   <p
                     className="flex items-center gap-1 text-gray-900 font-medium cursor-pointer"
-                    onClick={() => append({ label: '' })}
+                    onClick={() => append({ label: "" })}
                   >
                     <IoMdAddCircleOutline /> <span>Add options</span>
                   </p>
@@ -191,8 +189,8 @@ const AddProduct = () => {
                           id={`options.${index}.label`}
                           className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 ${
                             errors.options?.[index]?.label?.message
-                              ? 'focus:ring-rose-700 focus:border-rose-700'
-                              : 'focus:ring-sky-700 focus:border-sky-700'
+                              ? "focus:ring-rose-700 focus:border-rose-700"
+                              : "focus:ring-sky-700 focus:border-sky-700"
                           }`}
                           placeholder="label..."
                           {...register(`options.${index}.label`, {
@@ -216,8 +214,8 @@ const AddProduct = () => {
                           id={`options.${index}.extra`}
                           className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 ${
                             errors.options?.[index]?.extra?.message
-                              ? 'focus:ring-rose-700 focus:border-rose-700'
-                              : 'focus:ring-sky-700 focus:border-sky-700'
+                              ? "focus:ring-rose-700 focus:border-rose-700"
+                              : "focus:ring-sky-700 focus:border-sky-700"
                           }`}
                           placeholder="extra (0 if free)..."
                           {...register(`options.${index}.extra`, {

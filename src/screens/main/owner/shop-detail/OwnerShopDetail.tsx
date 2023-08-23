@@ -1,23 +1,22 @@
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 // import { BiDollarCircle } from 'react-icons/bi';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
-import Loading from '../../../../components/ui/Loading';
-import ErrorHandler from '../../../../components/ui/ErrorHandler';
-import queryService from '../../../../services/query.service';
-import ShopHeader from '../../../../components/ui/ShopHeader';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
-import { Tooltip } from 'flowbite-react';
-import { MdDeleteForever } from 'react-icons/md';
-import mutationService from '../../../../services/mutation.service';
+import Loading from "../../../../components/ui/Loading";
+import ErrorHandler from "../../../../components/ui/ErrorHandler";
+import queryService from "../../../../services/query.service";
+import ShopHeader from "../../../../components/ui/ShopHeader";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
+import { Tooltip } from "flowbite-react";
+import { MdDeleteForever } from "react-icons/md";
+import mutationService from "../../../../services/mutation.service";
 
 const OwnerShopDetail = () => {
   const params = useParams<{ shopId: string }>();
-
-  if (!params.shopId || !Boolean(parseInt(params.shopId)))
-    return <Navigate to="/" replace />;
-
   const navigate = useNavigate();
+
+  if (!params.shopId) return <Navigate to="/" replace />;
+
   const { data, error, isLoading } = queryService.ownerShopDetails({
     getOwnerIndividualShopInput: { id: +params.shopId },
   });
@@ -34,7 +33,7 @@ const OwnerShopDetail = () => {
   if (error) return <ErrorHandler error={error || deleteProductError} />;
 
   const onDeleteProduct = (productId: number) => {
-    if (window.confirm('Are you sure?'))
+    if (window.confirm("Are you sure?"))
       mutate({ deleteProductInput: { id: productId } });
   };
 
@@ -45,10 +44,10 @@ const OwnerShopDetail = () => {
       </Helmet>
 
       <ShopHeader
-        address={data.getOwnerIndividualShop.data?.address || ''}
-        name={data.getOwnerIndividualShop.data?.name || ''}
+        address={data.getOwnerIndividualShop.data?.address || ""}
+        name={data.getOwnerIndividualShop.data?.name || ""}
         categories={data.getOwnerIndividualShop.data?.categories}
-        image={data.getOwnerIndividualShop.data?.image || ''}
+        image={data.getOwnerIndividualShop.data?.image || ""}
       />
 
       <ContentWrapper>
@@ -79,7 +78,7 @@ const OwnerShopDetail = () => {
                       (acc, el) => {
                         return [...acc, el.slug];
                       },
-                      [] as string[],
+                      [] as string[]
                     ),
                 },
               })
@@ -111,7 +110,7 @@ const OwnerShopDetail = () => {
               >
                 <div>
                   <img
-                    src={product.image || 'https://placehold.co/600x400'}
+                    src={product.image || "https://placehold.co/600x400"}
                     alt={product.name}
                     className="object-cover w-24 h-24"
                   />
@@ -130,7 +129,7 @@ const OwnerShopDetail = () => {
                         size={25}
                         className={`cursor-pointer text-rusty-red ${
                           deleteProductLoading &&
-                          'cursor-not-allowed pointer-events-none'
+                          "cursor-not-allowed pointer-events-none"
                         }`}
                         onClick={() => onDeleteProduct(product.id)}
                       />

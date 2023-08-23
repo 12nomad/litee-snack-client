@@ -1,23 +1,20 @@
-import { Navigate, useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
-import useOrderStatusSubscription from './hooks/useOrderStatusSubscription';
-import Loading from '../../../../components/ui/Loading';
-import ErrorHandler from '../../../../components/ui/ErrorHandler';
-import queryService from '../../../../services/query.service';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
+import useOrderStatusSubscription from "./hooks/useOrderStatusSubscription";
+import Loading from "../../../../components/ui/Loading";
+import ErrorHandler from "../../../../components/ui/ErrorHandler";
+import queryService from "../../../../services/query.service";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
 
 const OrderDetail = () => {
   const params = useParams<{ orderId: string }>();
 
-  if (!params.orderId || !Boolean(parseInt(params.orderId)))
-    return <Navigate to="/dashboard" replace />;
-
   const { data, isLoading, error } = queryService.orderDetail({
-    getOrderInput: { id: +params.orderId },
+    getOrderInput: { id: params.orderId ? +params.orderId : 0 },
   });
   const { newStatusSub } = useOrderStatusSubscription({
-    orderStatusInput: { id: +params.orderId },
+    orderStatusInput: { id: params.orderId ? +params.orderId : 0 },
   });
 
   if (isLoading) return <Loading />;
@@ -43,7 +40,7 @@ const OrderDetail = () => {
           <div className="m-4">
             <div className="relative">
               <p>
-                <span className="font-medium">From:</span>{' '}
+                <span className="font-medium">From:</span>{" "}
                 {data.getOrder.data?.shop?.name}
               </p>
               <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-slate-400"></div>
@@ -51,7 +48,7 @@ const OrderDetail = () => {
 
             <div className="relative">
               <p className="mt-4">
-                <span className="font-medium">To:</span>{' '}
+                <span className="font-medium">To:</span>{" "}
                 {data.getOrder.data?.customer?.name}
               </p>
               <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-slate-400"></div>
@@ -59,18 +56,18 @@ const OrderDetail = () => {
 
             <div className="relative">
               <p className="mt-4">
-                <span className="font-medium">Driver:</span>{' '}
+                <span className="font-medium">Driver:</span>{" "}
                 {newStatusSub
                   ? newStatusSub.orderStatus.driver?.name
                   : data.getOrder.data?.driver?.name
                   ? data.getOrder.data?.driver?.name
-                  : 'no assigned driver yet'}
+                  : "no assigned driver yet"}
               </p>
               <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-slate-400"></div>
             </div>
           </div>
           <p className="mt-6 text-center text-xl">
-            <span className="font-medium underline">Status:</span>{' '}
+            <span className="font-medium underline">Status:</span>{" "}
             {newStatusSub
               ? newStatusSub.orderStatus.status
               : data.getOrder.data?.status}

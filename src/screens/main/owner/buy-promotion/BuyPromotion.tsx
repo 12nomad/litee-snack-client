@@ -1,21 +1,19 @@
-import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { RiShieldStarFill } from 'react-icons/ri';
-import { useParams, Navigate, useNavigate } from 'react-router-dom';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
-import useUserQuery from '../../../../hooks/useUserQuery';
-import useCartStore from '../../../../stores/cart.store';
+import { useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { RiShieldStarFill } from "react-icons/ri";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
+import useUserQuery from "../../../../hooks/useUserQuery";
+import useCartStore from "../../../../stores/cart.store";
 
 const BuyPromotion = () => {
   const params = useParams<{ shopId: string }>();
   const user = useUserQuery();
-
-  if (!params.shopId || !Boolean(parseInt(params.shopId)))
-    return <Navigate to="/" replace />;
-
   const [selectedOption, setSelectedOption] = useState<7 | 31 | null>();
   const setCurrentShopId = useCartStore((s) => s.setCurrentShopId);
   const navigate = useNavigate();
+
+  if (!params.shopId) return <Navigate to="/" replace />;
 
   const onPromoCheckout = () => {
     setCurrentShopId(+params.shopId!);
@@ -44,7 +42,7 @@ const BuyPromotion = () => {
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 mt-12 px-4 md:px-0">
           <article
             className={`bg-white py-8 px-8 md:px-12 cursor-pointer rounded-sm text-center w-full md:w-auto ${
-              selectedOption === 7 && 'scale-110'
+              selectedOption === 7 && "scale-110"
             }`}
             onClick={() => setSelectedOption(7)}
           >
@@ -57,7 +55,7 @@ const BuyPromotion = () => {
           </article>
           <article
             className={`bg-rusty-red text-white  py-8 px-8 md:px-12 cursor-pointer rounded-sm  text-center w-full md:w-auto ${
-              selectedOption === 31 && 'scale-110'
+              selectedOption === 31 && "scale-110"
             }`}
             onClick={() => setSelectedOption(31)}
           >

@@ -1,25 +1,19 @@
-import { Spinner } from 'flowbite-react';
-import { Helmet } from 'react-helmet-async';
-import { Navigate, useParams } from 'react-router-dom';
+import { Spinner } from "flowbite-react";
+import { Helmet } from "react-helmet-async";
+import { Navigate, useParams } from "react-router-dom";
 
-import { OrderStatus } from '../../../../gql/generated/graphql';
-import getErrorMessage from '../../../../utils/get-error-message.util';
-import Loading from '../../../../components/ui/Loading';
-import ErrorHandler from '../../../../components/ui/ErrorHandler';
-import queryService from '../../../../services/query.service';
-import mutationService from '../../../../services/mutation.service';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
+import { OrderStatus } from "../../../../gql/generated/graphql";
+import getErrorMessage from "../../../../utils/get-error-message.util";
+import Loading from "../../../../components/ui/Loading";
+import ErrorHandler from "../../../../components/ui/ErrorHandler";
+import queryService from "../../../../services/query.service";
+import mutationService from "../../../../services/mutation.service";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
 
 const OwnerShopOrderDetail = () => {
   const params = useParams<{ shopId: string; orderId: string }>();
 
-  if (
-    !params.shopId ||
-    !Boolean(parseInt(params.shopId)) ||
-    !params.orderId ||
-    !Boolean(parseInt(params.orderId))
-  )
-    return <Navigate to="/" replace />;
+  if (!params.shopId || !params.orderId) return <Navigate to="/" replace />;
 
   const { data, isLoading, error } = queryService.ownerShopOrderDetail({
     getShopOrderInput: { id: +params.orderId },
@@ -37,7 +31,7 @@ const OwnerShopOrderDetail = () => {
   if (error) return <ErrorHandler error={error} />;
 
   const onOrderStatusChange = (val: OrderStatus) => {
-    if (window.confirm('Are you sure?'))
+    if (window.confirm("Are you sure?"))
       mutate({ editOrderInput: { id: +params.orderId!, status: val } });
   };
 
@@ -57,7 +51,7 @@ const OwnerShopOrderDetail = () => {
             data.getShopOrder.data.orderItems.map((item) => (
               <div className="relative" key={item.id}>
                 <p className="mt-4">
-                  <span className="font-medium">Product:</span>{' '}
+                  <span className="font-medium">Product:</span>{" "}
                   {item.product?.name}
                 </p>
                 <p>
@@ -66,8 +60,8 @@ const OwnerShopOrderDetail = () => {
                 <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-slate-400"></div>
                 {item.orderChoices?.map((el, idx) => (
                   <p key={el.label + `${idx}`}>
-                    <span className="font-medium">Option:</span>{' '}
-                    {el.label ? el.label : 'none'}
+                    <span className="font-medium">Option:</span>{" "}
+                    {el.label ? el.label : "none"}
                   </p>
                 ))}
               </div>
@@ -82,7 +76,7 @@ const OwnerShopOrderDetail = () => {
                 {editOrderLoading ? (
                   <Spinner color="failure" />
                 ) : (
-                  'Prepare Order'
+                  "Prepare Order"
                 )}
               </button>
             )}
@@ -94,7 +88,7 @@ const OwnerShopOrderDetail = () => {
                 {editOrderLoading ? (
                   <Spinner color="failure" />
                 ) : (
-                  'Ready To Ship'
+                  "Ready To Ship"
                 )}
               </button>
             )}
@@ -105,7 +99,7 @@ const OwnerShopOrderDetail = () => {
             )}
             {editOrderError && (
               <p role="alert" className="text-xs text-rose-700 mt-2 font-bold">
-                <sup>*</sup>{' '}
+                <sup>*</sup>{" "}
                 {getErrorMessage(editOrderError.response.errors).message}
               </p>
             )}

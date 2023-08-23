@@ -1,24 +1,23 @@
-import { Dropdown } from 'flowbite-react';
-import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Link, Navigate, useParams } from 'react-router-dom';
-import { BiTask } from 'react-icons/bi';
+import { Dropdown } from "flowbite-react";
+import { useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { Link, Navigate, useParams } from "react-router-dom";
+import { BiTask } from "react-icons/bi";
 
-import { OrderStatus } from '../../../../gql/generated/graphql';
-import ErrorHandler from '../../../../components/ui/ErrorHandler';
-import Loading from '../../../../components/ui/Loading';
-import queryService from '../../../../services/query.service';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
+import { OrderStatus } from "../../../../gql/generated/graphql";
+import ErrorHandler from "../../../../components/ui/ErrorHandler";
+import Loading from "../../../../components/ui/Loading";
+import queryService from "../../../../services/query.service";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
 
 const OwnerShopOrders = () => {
   const params = useParams<{ shopId: string }>();
-
-  if (!params.shopId || !Boolean(parseInt(params.shopId)))
-    return <Navigate to="/" replace />;
-
   const [status, setStatus] = useState<
     OrderStatus.Pending | OrderStatus.Preparing
   >(OrderStatus.Pending);
+
+  if (!params.shopId) return <Navigate to="/" replace />;
+
   const { data, error, isLoading } = queryService.getOrders({
     getOrdersInput: { status, shopId: +params.shopId },
   });

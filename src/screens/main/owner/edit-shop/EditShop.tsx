@@ -1,29 +1,29 @@
-import { Helmet } from 'react-helmet-async';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
-import { useState } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Helmet } from "react-helmet-async";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
+import { useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   EditShopValidationSchema,
   editShopValidationSchema,
-} from '../../../../schemas/shop.schema';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import ImageInput from '../../../../components/form/ImageInput';
-import { IFormField } from '../../../../interfaces/form-fields.interface';
-import Input from '../../../../components/form/Input';
-import SubmitButton from '../../../../components/form/SubmitButton';
-import mutationService from '../../../../services/mutation.service';
-import { uploadImage } from '../../../../utils/cloudinary.util';
-import CategoryInput from '../../../../components/form/CategoryInput';
+} from "../../../../schemas/shop.schema";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import ImageInput from "../../../../components/form/ImageInput";
+import { IFormField } from "../../../../interfaces/form-fields.interface";
+import Input from "../../../../components/form/Input";
+import SubmitButton from "../../../../components/form/SubmitButton";
+import mutationService from "../../../../services/mutation.service";
+import { uploadImage } from "../../../../utils/cloudinary.util";
+import CategoryInput from "../../../../components/form/CategoryInput";
 
 const editShopFields: IFormField<FieldValues>[] = [
   {
-    label: 'Name: ',
-    name: 'name',
+    label: "Name: ",
+    name: "name",
   },
   {
-    label: 'Address: ',
-    name: 'address',
+    label: "Address: ",
+    name: "address",
   },
 ];
 
@@ -38,17 +38,13 @@ interface ILocationState {
 const EditShop = () => {
   const location = useLocation();
   const state = location.state as ILocationState;
-
-  if (!state || !state.shopId || !Boolean(state.shopId))
-    return <Navigate to="/" replace />;
-
   const [currentCategory, setCurrentCategory] = useState<string[]>(
-    state.categories || [],
+    state.categories || []
   );
-  const [currentCategoryError, setCurrentCategoryError] = useState('');
+  const [currentCategoryError, setCurrentCategoryError] = useState("");
   const [uploadState, setuploadState] = useState({
     uploadLoading: false,
-    uploadError: '',
+    uploadError: "",
   });
   const navigate = useNavigate();
 
@@ -67,6 +63,8 @@ const EditShop = () => {
     },
   });
 
+  if (!state || !state.shopId) return <Navigate to="/" replace />;
+
   const onSuccess = () => {
     reset();
     navigate(`/${state.shopId}`);
@@ -78,11 +76,12 @@ const EditShop = () => {
     name,
     image,
   }: EditShopValidationSchema) => {
-    setCurrentCategoryError('');
-    setuploadState({ uploadError: '', uploadLoading: true });
+    setCurrentCategoryError("");
+    setuploadState({ uploadError: "", uploadLoading: true });
 
     if (currentCategory.length < 1) {
-      setCurrentCategoryError('Select at least one category...');
+      setCurrentCategoryError("Select at least one category...");
+      setuploadState({ uploadError: "", uploadLoading: false });
       return;
     }
 
@@ -129,22 +128,22 @@ const EditShop = () => {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="grid place-items-center">
-                  {watch('image') &&
-                    watch('image') instanceof FileList &&
-                    watch('image').length > 0 && (
+                  {watch("image") &&
+                    watch("image") instanceof FileList &&
+                    watch("image").length > 0 && (
                       <img
-                        src={URL.createObjectURL(watch('image')[0])}
-                        alt={state.name || 'user avatar'}
+                        src={URL.createObjectURL(watch("image")[0])}
+                        alt={state.name || "user avatar"}
                         className="rounded-full w-32 h-32  object-cover"
                       />
                     )}
-                  {(!watch('image') || typeof watch('image') === 'string') && (
+                  {(!watch("image") || typeof watch("image") === "string") && (
                     <img
                       src={
                         state.image ||
-                        'https://static.thenounproject.com/png/4035892-200.png'
+                        "https://static.thenounproject.com/png/4035892-200.png"
                       }
-                      alt={state.name || 'user avatar'}
+                      alt={state.name || "user avatar"}
                       className="rounded-full w-32 h-32  object-cover"
                     />
                   )}

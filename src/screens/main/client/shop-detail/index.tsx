@@ -1,27 +1,35 @@
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { BsCartPlus } from 'react-icons/bs';
-import { useState } from 'react';
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { BsCartPlus } from "react-icons/bs";
+import { useState } from "react";
 
-import { OrderOptionInputType } from '../../../../gql/generated/graphql';
-import Loading from '../../../../components/ui/Loading';
-import ErrorHandler from '../../../../components/ui/ErrorHandler';
-import useCartStore from '../../../../stores/cart.store';
-import OrderModal from './components/OrderModal';
-import queryService from '../../../../services/query.service';
-import mutationService from '../../../../services/mutation.service';
-import ProductOptions from './components/ProductOptions';
-import ItemQuantity from './components/ItemQuantity';
-import ShopHeader from '../../../../components/ui/ShopHeader';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
-import useUserQuery from '../../../../hooks/useUserQuery';
+import { OrderOptionInputType } from "../../../../gql/generated/graphql";
+import Loading from "../../../../components/ui/Loading";
+import ErrorHandler from "../../../../components/ui/ErrorHandler";
+import useCartStore from "../../../../stores/cart.store";
+import OrderModal from "./components/OrderModal";
+import queryService from "../../../../services/query.service";
+import mutationService from "../../../../services/mutation.service";
+import ProductOptions from "./components/ProductOptions";
+import ItemQuantity from "./components/ItemQuantity";
+import ShopHeader from "../../../../components/ui/ShopHeader";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
+import useUserQuery from "../../../../hooks/useUserQuery";
 
 const ShopDetail = () => {
   const clearCurrentOrderArr = useCartStore((s) => s.clearCurrentOrderArr);
   const currentShopId = useCartStore((s) => s.currentShopId);
   const setCurrentShopId = useCartStore((s) => s.setCurrentShopId);
   const params = useParams<{ shopId: string }>();
+  const [modalOpen, setModalOpen] = useState(false);
+  const currentOrderArr = useCartStore((s) => s.currentOrderArr);
+  const onAddItem = useCartStore((s) => s.onAddItem);
+  const isInCart = useCartStore((s) => s.isInCart);
+  const totalItems = useCartStore((s) => s.totalItems);
+  const currentOrderId = useCartStore((s) => s.currentOrderId);
+  const user = useUserQuery();
+  const navigate = useNavigate();
 
-  if (!params.shopId || !Boolean(parseInt(params.shopId))) {
+  if (!params.shopId) {
     clearCurrentOrderArr();
     return <Navigate to="/" replace />;
   }
@@ -31,15 +39,6 @@ const ShopDetail = () => {
     setCurrentShopId(0);
   }
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const currentOrderArr = useCartStore((s) => s.currentOrderArr);
-  const onAddItem = useCartStore((s) => s.onAddItem);
-  const isInCart = useCartStore((s) => s.isInCart);
-  const totalItems = useCartStore((s) => s.totalItems);
-  const currentOrderId = useCartStore((s) => s.currentOrderId);
-
-  const user = useUserQuery();
-  const navigate = useNavigate();
   const { data, error, isLoading } = queryService.shopDetails({
     getShopByIdInput: { id: +params.shopId },
   });
@@ -90,9 +89,9 @@ const ShopDetail = () => {
   return (
     <section>
       <ShopHeader
-        address={data.getShopById.data?.address || ''}
-        image={data.getShopById.data?.image || ''}
-        name={data.getShopById.data?.name || ''}
+        address={data.getShopById.data?.address || ""}
+        image={data.getShopById.data?.image || ""}
+        name={data.getShopById.data?.name || ""}
         categories={data.getShopById.data?.categories}
       />
 
@@ -115,7 +114,7 @@ const ShopDetail = () => {
               <BsCartPlus size={25} />
               <span
                 className={`text-white absolute -top-2 -right-[13px] w-5 h-5 rounded-full grid place-items-center text-xs font-bold ${
-                  currentOrderArr.length > 0 ? 'bg-rusty-red' : 'bg-black '
+                  currentOrderArr.length > 0 ? "bg-rusty-red" : "bg-black "
                 }`}
               >
                 {totalItems()}
@@ -134,8 +133,8 @@ const ShopDetail = () => {
                 key={product.id}
                 className={`w-full bg-white border rounded-sm shadow flex items-center ${
                   isInCart(product.id)
-                    ? ' border-night-black'
-                    : ' border-gray-200'
+                    ? " border-night-black"
+                    : " border-gray-200"
                 }`}
               >
                 <div className="px-4 py-4 align-center w-full">
@@ -177,7 +176,7 @@ const ShopDetail = () => {
                 </div>
                 <img
                   className="rounded-r-sm h-32 object-cover w-32 self-start"
-                  src={product.image || 'https://placehold.co/600x400'}
+                  src={product.image || "https://placehold.co/600x400"}
                   alt={product.name}
                 />
               </div>
