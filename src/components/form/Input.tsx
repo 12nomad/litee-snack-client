@@ -1,6 +1,6 @@
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
-import { IFormField } from '../../interfaces/form-fields.interface';
+import { IFormField } from "../../interfaces/form-fields.interface";
 
 interface IInput<T extends FieldValues> extends IFormField<T> {
   register: UseFormRegister<T>;
@@ -13,7 +13,7 @@ const Input = <T extends FieldValues>({
   label,
   register,
   isDisabled = true,
-  type = 'text',
+  type = "text",
 }: IInput<T>) => {
   return (
     <div>
@@ -25,11 +25,11 @@ const Input = <T extends FieldValues>({
         id={name}
         className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 ${
           errors[name]?.message
-            ? 'focus:ring-rose-700 focus:border-rose-700'
-            : 'focus:ring-sky-700 focus:border-sky-700'
+            ? "focus:ring-rose-700 focus:border-rose-700"
+            : "focus:ring-sky-700 focus:border-sky-700"
         }`}
         disabled={!isDisabled}
-        placeholder="••••••••"
+        // placeholder="••••••••"
         {...register(name)}
       />
       {errors[name] && (

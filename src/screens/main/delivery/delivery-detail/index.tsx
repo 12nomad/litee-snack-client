@@ -64,7 +64,7 @@ const DeliveryDetail = () => {
           <div className="mt-6">
             {data.deliveryOrderDetail.data?.status === OrderStatus.Ready && (
               <button
-                className="py-2 mx-auto rounded-sm bg-night-black text-white w-full inline-block font-bold"
+                className="py-2 mx-auto rounded-md bg-night-black text-white w-full inline-block font-bold"
                 onClick={() => onOrderStatusChange(OrderStatus.Picked)}
               >
                 {editOrderLoading ? <Spinner color="failure" /> : "Pick Order"}
@@ -72,7 +72,7 @@ const DeliveryDetail = () => {
             )}
             {data.deliveryOrderDetail.data?.status === OrderStatus.Picked && (
               <button
-                className="py-2 mx-auto rounded-sm bg-rusty-red text-white w-full inline-block font-bold"
+                className="py-2 mx-auto rounded-md bg-rusty-red text-white w-full inline-block font-bold"
                 onClick={() => onOrderStatusChange(OrderStatus.Delivered)}
               >
                 {editOrderLoading ? (

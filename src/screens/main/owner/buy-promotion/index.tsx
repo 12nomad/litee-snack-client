@@ -35,13 +35,13 @@ const BuyPromotion = () => {
             Get your shop promoted!
           </h2>
           <p className="mt-6 lg:text-lg">
-            Select one option below and let's get started:
+            Select one option below and let&#39;s get started:
           </p>
         </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 mt-12 px-4 md:px-0">
           <article
-            className={`bg-white py-8 px-8 md:px-12 cursor-pointer rounded-sm text-center w-full md:w-auto ${
+            className={`bg-white border py-8 px-8 md:px-12 cursor-pointer rounded-md text-center w-full md:w-auto ${
               selectedOption === 7 && "scale-110"
             }`}
             onClick={() => setSelectedOption(7)}
@@ -54,7 +54,7 @@ const BuyPromotion = () => {
             </div>
           </article>
           <article
-            className={`bg-rusty-red text-white  py-8 px-8 md:px-12 cursor-pointer rounded-sm  text-center w-full md:w-auto ${
+            className={`bg-rusty-red text-white  py-8 px-8 md:px-12 cursor-pointer rounded-md  text-center w-full md:w-auto ${
               selectedOption === 31 && "scale-110"
             }`}
             onClick={() => setSelectedOption(31)}
@@ -72,7 +72,7 @@ const BuyPromotion = () => {
 
         {selectedOption && (
           <p
-            className=" text-white bg-night-black px-4 py-2 rounded-sm font-bold cursor-pointer text-center w-44 mx-auto mt-8"
+            className=" text-white bg-night-black px-4 py-2 rounded-md font-bold cursor-pointer text-center w-44 mx-auto mt-8"
             onClick={onPromoCheckout}
           >
             Go to checkout &rarr;

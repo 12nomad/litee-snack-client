@@ -1,13 +1,13 @@
-import { Badge } from 'flowbite-react';
-import { Helmet } from 'react-helmet-async';
-import { AiTwotoneShop } from 'react-icons/ai';
-import { MdOutlineLocationOn } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { Badge } from "flowbite-react";
+import { Helmet } from "react-helmet-async";
+import { AiTwotoneShop } from "react-icons/ai";
+import { MdOutlineLocationOn } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
-import Loading from '../../../../components/ui/Loading';
-import ErrorHandler from '../../../../components/ui/ErrorHandler';
-import queryService from '../../../../services/query.service';
-import ContentWrapper from '../../../../components/ui/ContentWrapper';
+import Loading from "../../../../components/ui/Loading";
+import ErrorHandler from "../../../../components/ui/ErrorHandler";
+import queryService from "../../../../services/query.service";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
 
 const OwnerShops = () => {
   const { data, error, isLoading } = queryService.ownerShops();
@@ -29,7 +29,7 @@ const OwnerShops = () => {
         </h2>
         <p
           className="text-rusty-red font-bold cursor-pointer mb-3"
-          onClick={() => navigate('/create-shop')}
+          onClick={() => navigate("/create-shop")}
         >
           Create new shop &rarr;
         </p>
@@ -44,9 +44,9 @@ const OwnerShops = () => {
             >
               <div className="max-w-[6rem] h-full">
                 <img
-                  src={shop.image || 'https://placehold.co/600x400'}
+                  src={shop.image || "https://placehold.co/600x400"}
                   alt={shop.name}
-                  className="object-cover w-full h-full"
+                  className="object-cover w-full h-full rounded-sm"
                 />
               </div>
               <div>

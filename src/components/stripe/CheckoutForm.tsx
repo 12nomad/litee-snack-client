@@ -2,12 +2,12 @@ import {
   PaymentElement,
   useElements,
   useStripe,
-} from '@stripe/react-stripe-js';
-import { Spinner } from 'flowbite-react';
-import { Dispatch, FormEvent, SetStateAction } from 'react';
-import { IPaymentState } from '../../interfaces/IPaymentState.interface';
-import useCartStore from '../../stores/cart.store';
-import { useNavigate } from 'react-router-dom';
+} from "@stripe/react-stripe-js";
+import { Spinner } from "flowbite-react";
+import { Dispatch, FormEvent, SetStateAction } from "react";
+import { IPaymentState } from "../../interfaces/IPaymentState.interface";
+import useCartStore from "../../stores/cart.store";
+import { useNavigate } from "react-router-dom";
 
 interface ICheckoutForm {
   paymentState: IPaymentState;
@@ -34,7 +34,7 @@ const CheckoutForm = ({ paymentState, setPaymentState }: ICheckoutForm) => {
       paymentSuccess: false,
     });
     stripe
-      .confirmPayment({ elements, redirect: 'if_required' })
+      .confirmPayment({ elements, redirect: "if_required" })
       .then((res) => {
         if (res.error)
           return setPaymentState({
@@ -46,8 +46,8 @@ const CheckoutForm = ({ paymentState, setPaymentState }: ICheckoutForm) => {
         clearCurrentOrderArr();
         setCurrentOrderId(0);
         setCurrentShopId(0);
-        setStripePaymentIntent('');
-        return navigate('/checkout-success', { replace: true });
+        setStripePaymentIntent("");
+        return navigate("/checkout-success", { replace: true });
       })
       .catch((error) => {
         return setPaymentState({
@@ -60,13 +60,13 @@ const CheckoutForm = ({ paymentState, setPaymentState }: ICheckoutForm) => {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit} className="my-6">
-      <PaymentElement id="payment-element" options={{ layout: 'tabs' }} />
+      <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
       <button
         type="submit"
         disabled={paymentState.paymentLoading || !stripe || !elements}
-        className="w-full text-slate-50 bg-rusty-red hover:bg-rusty-red-shade focus:ring-4 focus:outline-none focus:ring-rusty-red-tint font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2"
+        className="w-full text-slate-50 bg-rusty-red hover:bg-rusty-red-shade focus:ring-4 focus:outline-none focus:ring-rusty-red-tint font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4"
       >
-        {paymentState.paymentLoading ? <Spinner color="failure" /> : 'Pay Now'}
+        {paymentState.paymentLoading ? <Spinner color="failure" /> : "Pay Now"}
       </button>
       {paymentState.paymentError && (
         <p className="text-red-700">

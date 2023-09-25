@@ -135,7 +135,7 @@ const Shops = () => {
                 className="cursor-pointer"
                 onClick={() => onCategoryChange(category.slug)}
               >
-                <div className="w-16 h-16 rounded-full grid place-items-center bg-white mx-auto">
+                <div className="w-16 h-16 rounded-full grid place-items-center bg-white mx-auto border">
                   <img
                     src={
                       category.image ||

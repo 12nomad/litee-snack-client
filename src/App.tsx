@@ -1,12 +1,12 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 
-import Guard from './screens/Guard';
-import NotFound from './screens/main/common/not-found/NotFound';
-import Auth from './screens/auth';
-import Login from './screens/auth/login/Login';
-import Signup from './screens/auth/signup/Signup';
-import PasswordReset from './screens/auth/password-reset';
-import Home from './screens/main';
+import Guard from "./screens/main/Guard";
+import NotFound from "./screens/main/common/not-found/NotFound";
+import Auth from "./screens/auth";
+import Login from "./screens/auth/login";
+import Signup from "./screens/auth/signup";
+import PasswordReset from "./screens/auth/password-reset";
+import Home from "./screens/main";
 
 const App = () => {
   return (

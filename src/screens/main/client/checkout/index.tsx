@@ -57,7 +57,7 @@ const Checkout = () => {
 
       {options && (
         <section>
-          <div className="max-w-xl mx-auto py-4 px-8 bg-white mt-8 rounded-sm">
+          <div className="max-w-xl mx-auto py-4 px-8 bg-white mt-8 rounded-md border">
             <StripeTestMode />
             <Elements stripe={stripePromise} options={options}>
               <CheckoutForm

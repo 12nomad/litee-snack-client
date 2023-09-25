@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply text-night-black bg-slate-100 overflow-x-hidden;
+    @apply text-night-black bg-white overflow-x-hidden;
   }
 }

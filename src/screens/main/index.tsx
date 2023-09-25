@@ -1,29 +1,29 @@
 import { Route, Routes } from "react-router-dom";
 
-import Checkout from "./client/checkout/Checkout";
-import OrderDashboard from "./client/order-dashboard/OrderDashboard";
-import OrderDetail from "./client/order-detail/OrderDetail";
+import Checkout from "./client/checkout";
+import OrderDashboard from "./client/order-dashboard";
+import OrderDetail from "./client/order-detail";
 import ShopDetail from "./client/shop-detail";
 import CheckoutSuccess from "./common/checkout-success/CheckoutSuccess";
 import Nav from "../../components/ui/Nav";
-import AddProduct from "./owner/add-product/AddProduct";
-import BuyPromotion from "./owner/buy-promotion/BuyPromotion";
-import CreateShop from "./owner/create-shop/CreateShop";
-import OwnerDashboard from "./owner/owner-dashboard/OwnerDashboard";
-import OwnerShopDetail from "./owner/shop-detail/OwnerShopDetail";
-import OwnerShopOrderDetail from "./owner/owner-shop-order-detail/OwnerShopOrderDetail";
+import AddProduct from "./owner/add-product";
+import BuyPromotion from "./owner/buy-promotion";
+import CreateShop from "./owner/create-shop";
+import OwnerDashboard from "./owner/owner-dashboard";
+import OwnerShopDetail from "./owner/shop-detail";
+import OwnerShopOrderDetail from "./owner/owner-shop-order-detail";
 import { Role } from "../../gql/generated/graphql";
 import useUserQuery from "../../hooks/useUserQuery";
 import AccountVerification from "./common/account-verification/AccountVerification";
 import EditProfile from "./common/edit-profile/EditProfile";
 import NotFound from "./common/not-found/NotFound";
-import OwnerShopOrders from "./owner/owner-shop-orders/OwnerShopOrders";
-import PromoCheckout from "./owner/promo-checkout/PromoCheckout";
+import OwnerShopOrders from "./owner/owner-shop-orders";
+import PromoCheckout from "./owner/promo-checkout";
 import Shops from "./client/home";
-import OwnerShops from "./owner/home/OwnerShops";
-import EditShop from "./owner/edit-shop/EditShop";
-import Deliveries from "./delivery/home/Deliveries";
-import DeliveryDetail from "./delivery/delivery-detail/DeliveryDetail";
+import OwnerShops from "./owner/home";
+import EditShop from "./owner/edit-shop";
+import Deliveries from "./delivery/home";
+import DeliveryDetail from "./delivery/delivery-detail";
 
 const Home = () => {
   const user = useUserQuery();

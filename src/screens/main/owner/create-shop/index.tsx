@@ -1,22 +1,24 @@
-import { Helmet } from "react-helmet-async";
-import ContentWrapper from "../../../../components/ui/ContentWrapper";
-import { useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { FieldValues, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { BsArrowLeftCircle } from "react-icons/bs";
+
 import {
-  EditShopValidationSchema,
-  editShopValidationSchema,
+  CreateShopValidationSchema,
+  createShopValidationSchema,
 } from "../../../../schemas/shop.schema";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import ImageInput from "../../../../components/form/ImageInput";
+import { uploadImage } from "../../../../utils/cloudinary.util";
+import ContentWrapper from "../../../../components/ui/ContentWrapper";
+import mutationService from "../../../../services/mutation.service";
 import { IFormField } from "../../../../interfaces/form-fields.interface";
 import Input from "../../../../components/form/Input";
 import SubmitButton from "../../../../components/form/SubmitButton";
-import mutationService from "../../../../services/mutation.service";
-import { uploadImage } from "../../../../utils/cloudinary.util";
+import ImageInput from "../../../../components/form/ImageInput";
 import CategoryInput from "../../../../components/form/CategoryInput";
 
-const editShopFields: IFormField<FieldValues>[] = [
+const createShopFields: IFormField<FieldValues>[] = [
   {
     label: "Name: ",
     name: "name",
@@ -27,25 +29,13 @@ const editShopFields: IFormField<FieldValues>[] = [
   },
 ];
 
-interface ILocationState {
-  shopId: number;
-  name: string;
-  address: string;
-  image: string;
-  categories: string[];
-}
-
-const EditShop = () => {
-  const location = useLocation();
-  const state = location.state as ILocationState;
-  const [currentCategory, setCurrentCategory] = useState<string[]>(
-    state.categories || []
-  );
-  const [currentCategoryError, setCurrentCategoryError] = useState("");
+const CreateShop = () => {
   const [uploadState, setuploadState] = useState({
     uploadLoading: false,
     uploadError: "",
   });
+  const [currentCategory, setCurrentCategory] = useState<string[]>([]);
+  const [currentCategoryError, setCurrentCategoryError] = useState("");
   const navigate = useNavigate();
 
   const {
@@ -54,28 +44,20 @@ const EditShop = () => {
     formState: { errors },
     reset,
     watch,
-  } = useForm<EditShopValidationSchema>({
-    resolver: zodResolver(editShopValidationSchema),
-    defaultValues: {
-      name: state.name,
-      address: state.address,
-      image: state.image || null,
-    },
+  } = useForm<CreateShopValidationSchema>({
+    resolver: zodResolver(createShopValidationSchema),
   });
-
-  if (!state || !state.shopId) return <Navigate to="/" replace />;
-
   const onSuccess = () => {
     reset();
-    navigate(`/${state.shopId}`);
+    navigate("/");
   };
-  const { mutate, isLoading, error } = mutationService.editShop(onSuccess);
+  const { mutate, isLoading, error } = mutationService.createShop(onSuccess);
 
   const onSubmit = async ({
-    address,
     name,
     image,
-  }: EditShopValidationSchema) => {
+    address,
+  }: CreateShopValidationSchema) => {
     setCurrentCategoryError("");
     setuploadState({ uploadError: "", uploadLoading: true });
 
@@ -85,8 +67,8 @@ const EditShop = () => {
       return;
     }
 
-    let currentImage = image;
-    if (image && image instanceof FileList && image.length > 0) {
+    let currentImage: string | undefined;
+    if (image instanceof FileList && image.length > 0) {
       const { data, error } = await uploadImage(image[0]);
       if (error) {
         setuploadState({ uploadError: error, uploadLoading: false });
@@ -96,14 +78,17 @@ const EditShop = () => {
 
       currentImage = data?.url;
     } else {
-      currentImage = state.image;
+      setuploadState({
+        uploadError: "Please upload a shop image...",
+        uploadLoading: false,
+      });
+      return;
     }
 
     mutate({
-      editShopInput: {
-        shopId: state.shopId,
-        name,
+      createShopInput: {
         address,
+        name,
         image: currentImage,
         category: currentCategory,
       },
@@ -112,17 +97,24 @@ const EditShop = () => {
 
   return (
     <ContentWrapper>
-      <section className="grid w-full place-items-center text-center">
-        <Helmet>
-          <title>Edit Shop | Litee Snack🍔</title>
-        </Helmet>
+      <Helmet>
+        <title>Create Shop | Litee Snack🍔</title>
+      </Helmet>
 
+      <section className="grid w-full place-items-center text-center">
         <div>
-          <div className="md:w-[422px] bg-white rounded-lg shadow-sm text-left">
+          <h2
+            className="text-left mb-4 flex items-center gap-2 text-lg underline cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            <BsArrowLeftCircle /> Back to shop
+          </h2>
+          <div className="md:w-[422px] bg-white rounded-lg shadow-sm text-left border">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl text-center font-medium leading-tight tracking-tight md:text-2xl">
-                Edit Shop Info.
+                Create New Shop.
               </h1>
+
               <form
                 className="space-y-4 md:space-y-6 text-rusty-red"
                 onSubmit={handleSubmit(onSubmit)}
@@ -133,34 +125,25 @@ const EditShop = () => {
                     watch("image").length > 0 && (
                       <img
                         src={URL.createObjectURL(watch("image")[0])}
-                        alt={state.name || "user avatar"}
+                        alt="shop image"
                         className="rounded-full w-32 h-32  object-cover"
                       />
                     )}
-                  {(!watch("image") || typeof watch("image") === "string") && (
-                    <img
-                      src={
-                        state.image ||
-                        "https://static.thenounproject.com/png/4035892-200.png"
-                      }
-                      alt={state.name || "user avatar"}
-                      className="rounded-full w-32 h-32  object-cover"
-                    />
-                  )}
                 </div>
 
                 <ImageInput
-                  label="Change Shop Image: "
+                  label="Upload Shop Image: "
                   name="image"
                   errors={errors}
                   register={register}
                 />
 
-                {editShopFields.map((el) => (
+                {createShopFields.map((el) => (
                   <Input
                     key={el.name}
                     name={el.name}
                     label={el.label}
+                    type={el.type}
                     register={register}
                     errors={errors}
                   />
@@ -175,7 +158,7 @@ const EditShop = () => {
                 <SubmitButton
                   isLoading={uploadState.uploadLoading || isLoading}
                   error={uploadState.uploadError || error}
-                  label="Update"
+                  label="Confirm"
                 />
               </form>
             </div>
@@ -186,4 +169,4 @@ const EditShop = () => {
   );
 };
 
-export default EditShop;
+export default CreateShop;

@@ -1,8 +1,8 @@
-import { BsCartPlus } from 'react-icons/bs';
-import { IoMdCloseCircle } from 'react-icons/io';
-import useCartStore from '../../../../../stores/cart.store';
-import { Spinner } from 'flowbite-react';
-import { Dispatch, SetStateAction } from 'react';
+import { BsCartPlus } from "react-icons/bs";
+import { IoMdCloseCircle } from "react-icons/io";
+import useCartStore from "../../../../../stores/cart.store";
+import { Spinner } from "flowbite-react";
+import { Dispatch, SetStateAction } from "react";
 
 interface IOrderModal {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -46,31 +46,31 @@ const OrderModal = ({
           >
             <div>
               <img
-                src={el.productImage || 'https://placehold.co/600x400'}
+                src={el.productImage || "https://placehold.co/600x400"}
                 alt={el.productName}
-                className="object-cover w-24 h-24"
+                className="object-cover w-24 h-24 rounded-sm"
               />
             </div>
             <div>
               <h3 className="font-bold">{el.productName}</h3>
               <p>
-                {' '}
+                {" "}
                 <span className="font-medium">Unit Price: </span>
                 {el.productPrice}&#36; (x{el.quantity})
               </p>
               {el.orderChoices && el.orderChoices.length > 0 && (
                 <p>
-                  {' '}
+                  {" "}
                   <span className="font-medium">Options: </span>
                   {el.orderChoices?.map((choice) => (
                     <span key={choice.label}>
-                      {choice.label} - {choice.extra}&#36; (x{choice.quantity}),{' '}
+                      {choice.label} - {choice.extra}&#36; (x{choice.quantity}),{" "}
                     </span>
                   ))}
                 </p>
               )}
               <p>
-                {' '}
+                {" "}
                 <span className="font-medium">Total Price: </span>
                 {itemPrice(el.productId).toFixed(2)}&#36;
               </p>
@@ -85,7 +85,7 @@ const OrderModal = ({
             &#36;
           </p>
           <p
-            className=" text-white bg-rusty-red px-4 py-2 rounded-sm font-bold cursor-pointer text-center w-44 "
+            className=" text-white bg-rusty-red px-4 py-2 rounded-md font-bold cursor-pointer text-center w-44"
             onClick={onCheckout}
           >
             {createOrderLoading ? (

@@ -70,7 +70,7 @@ const OwnerShopOrderDetail = () => {
           <div className="mt-6">
             {data.getShopOrder.data?.status === OrderStatus.Pending && (
               <button
-                className="py-2 mx-auto rounded-sm bg-night-black text-white w-full inline-block font-bold"
+                className="py-2 mx-auto rounded-md bg-night-black text-white w-full inline-block font-bold"
                 onClick={() => onOrderStatusChange(OrderStatus.Preparing)}
               >
                 {editOrderLoading ? (
@@ -82,7 +82,7 @@ const OwnerShopOrderDetail = () => {
             )}
             {data.getShopOrder.data?.status === OrderStatus.Preparing && (
               <button
-                className="py-2 mx-auto rounded-sm bg-rusty-red text-white w-full inline-block font-bold"
+                className="py-2 mx-auto rounded-md bg-rusty-red text-white w-full inline-block font-bold"
                 onClick={() => onOrderStatusChange(OrderStatus.Ready)}
               >
                 {editOrderLoading ? (

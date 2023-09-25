@@ -112,7 +112,7 @@ const OwnerShopDetail = () => {
                   <img
                     src={product.image || "https://placehold.co/600x400"}
                     alt={product.name}
-                    className="object-cover w-24 h-24"
+                    className="object-cover w-24 h-24 rounded-sm"
                   />
                 </div>
                 <div className="w-full">

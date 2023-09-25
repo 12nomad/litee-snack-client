@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { ClientError } from 'graphql-request';
-import { useEffect } from 'react';
-import useAuthStore from '../../stores/auth.store';
-import useCartStore from '../../stores/cart.store';
-import getErrorMessage from '../../utils/get-error-message.util';
+import { useNavigate } from "react-router-dom";
+import { ClientError } from "graphql-request";
+import { useEffect } from "react";
+import useAuthStore from "../../stores/auth.store";
+import useCartStore from "../../stores/cart.store";
+import getErrorMessage from "../../utils/get-error-message.util";
 
 interface IError {
   error: ClientError | undefined;
@@ -22,20 +22,20 @@ const ErrorHandler = ({ error }: IError) => {
     if (
       nestError &&
       nestError.statusCode === 401 &&
-      nestError.message === 'Unauthorized'
+      nestError.message === "Unauthorized"
     ) {
       setAuth(false);
-      setStripePaymentIntent('');
+      setStripePaymentIntent("");
       clearCurrentOrderArr();
       setCurrentOrderId(0);
       setCurrentShopId(0);
 
-      navigate('/auth', { replace: true });
+      navigate("/auth", { replace: true });
     }
   }, [nestError.message]);
 
   // FIXME: connection lost
-  if (error?.message === 'Network request failed')
+  if (error?.message === "Network request failed")
     return (
       <h1 className="text-xl text-center font-medium">
         Please check your internet connection then try again...
@@ -43,7 +43,10 @@ const ErrorHandler = ({ error }: IError) => {
     );
 
   return (
-    <p role="alert" className="text-xs text-rose-700 mt-2 font-bold ">
+    <p
+      role="alert"
+      className="text-xs text-rose-700 mt-2 font-bold mx-[12px] md:mx-[32px] lg:mx-[60px] py-6"
+    >
       <sup>*</sup> {nestError?.message || error?.message}
     </p>
   );

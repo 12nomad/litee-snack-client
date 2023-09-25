@@ -3,7 +3,7 @@ import {
   FieldValue,
   FieldValues,
   UseFormRegister,
-} from 'react-hook-form';
+} from "react-hook-form";
 
 interface IImageInput<T extends FieldValues> {
   label: string;
@@ -22,10 +22,7 @@ const ImageInput = <T extends FieldValues>({
 }: IImageInput<T>) => {
   return (
     <div>
-      <label
-        className="block mb-2 text-sm font-medium text-gray-900 "
-        htmlFor={name}
-      >
+      <label className="block mb-2 text-sm text-gray-900 " htmlFor={name}>
         {label}
       </label>
       <input

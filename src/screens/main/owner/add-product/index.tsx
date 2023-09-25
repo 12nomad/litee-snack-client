@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { TiDelete } from "react-icons/ti";
+import { BsArrowLeftCircle } from "react-icons/bs";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -107,7 +108,13 @@ const AddProduct = () => {
 
       <section className="grid w-full place-items-center text-center">
         <div>
-          <div className="md:w-[422px] bg-white rounded-lg shadow-sm text-left">
+          <h2
+            className="text-left mb-4 flex items-center gap-2 text-lg underline cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            <BsArrowLeftCircle /> Back to shop
+          </h2>
+          <div className="md:w-[422px] bg-white rounded-lg shadow-sm text-left border">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl text-center font-medium leading-tight tracking-tight md:text-2xl">
                 Add New Product.
@@ -131,7 +138,7 @@ const AddProduct = () => {
 
                 <ImageInput
                   name="image"
-                  label="Upload Product Image"
+                  label="Upload Product Image:"
                   errors={errors}
                   register={register}
                 />
@@ -149,7 +156,7 @@ const AddProduct = () => {
                 <div>
                   <label
                     htmlFor="price"
-                    className="block mb-2 text-sm font-medium text-gray-900 "
+                    className="block mb-2 text-sm text-gray-900 "
                   >
                     Price (USD):
                   </label>
@@ -192,7 +199,7 @@ const AddProduct = () => {
                               ? "focus:ring-rose-700 focus:border-rose-700"
                               : "focus:ring-sky-700 focus:border-sky-700"
                           }`}
-                          placeholder="label..."
+                          placeholder="label"
                           {...register(`options.${index}.label`, {
                             minLength: 2,
                             required: true,
@@ -217,7 +224,7 @@ const AddProduct = () => {
                               ? "focus:ring-rose-700 focus:border-rose-700"
                               : "focus:ring-sky-700 focus:border-sky-700"
                           }`}
-                          placeholder="extra (0 if free)..."
+                          placeholder="extra (0 if free)"
                           {...register(`options.${index}.extra`, {
                             valueAsNumber: true,
                             min: 0,

@@ -64,7 +64,7 @@ const PromoCheckout = () => {
                   "https://placehold.co/600x400"
                 }
                 alt={data.getOwnerIndividualShop.data?.name}
-                className="object-cover w-28 h-28 md:w-24 md:h-24 "
+                className="object-cover w-28 h-28 md:w-24 md:h-24 rounded-sm"
               />
             </div>
             <div>
@@ -106,7 +106,7 @@ const PromoCheckout = () => {
 
       {options && (
         <section>
-          <div className="max-w-xl mx-auto py-4 px-8 bg-white mt-8 rounded-sm">
+          <div className="max-w-xl mx-auto py-4 px-8 bg-white mt-8 rounded-md border">
             <StripeTestMode />
             <Elements stripe={stripePromise} options={options}>
               <CheckoutForm
