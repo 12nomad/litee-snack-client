@@ -24,7 +24,7 @@ const Nav = () => {
   const filterOrder = useNotificationStore((s) => s.filterOrder);
   const clearNotification = useNotificationStore((s) => s.clearNotification);
 
-  const onSuccess = () => navigate("/auth", { replace: true });
+  const onSuccess = () => navigate("/landing", { replace: true });
   const { mutate } = mutationService.logout(onSuccess);
 
   useShopNotif();
