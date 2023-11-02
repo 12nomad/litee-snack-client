@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    --scroll-behavior: smooth !important;
+    scroll-behavior: smooth !important;
+  }
+
   body {
     @apply text-night-black bg-white overflow-x-hidden;
   }

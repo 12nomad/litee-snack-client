@@ -1,19 +1,19 @@
-import { Navbar, Avatar, Dropdown, Badge } from 'flowbite-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { GiHamburger } from 'react-icons/gi';
+import { Navbar, Avatar, Dropdown, Badge } from "flowbite-react";
+import { Link, useNavigate } from "react-router-dom";
+import { GiHamburger } from "react-icons/gi";
 import {
   HiOutlineUserCircle,
   HiOutlineMail,
   HiOutlineLogin,
-} from 'react-icons/hi';
-import { RiErrorWarningLine } from 'react-icons/ri';
-import { MdNotifications, MdNotificationsActive } from 'react-icons/md';
+} from "react-icons/hi";
+import { RiErrorWarningLine } from "react-icons/ri";
+import { MdNotifications, MdNotificationsActive } from "react-icons/md";
 
-import { Role } from '../../gql/generated/graphql';
-import useShopNotif from '../../hooks/useShopNotif';
-import useUserQuery from '../../hooks/useUserQuery';
-import useNotificationStore from '../../stores/notification.store';
-import mutationService from '../../services/mutation.service';
+import { Role } from "../../gql/generated/graphql";
+import useShopNotif from "../../hooks/useShopNotif";
+import useUserQuery from "../../hooks/useUserQuery";
+import useNotificationStore from "../../stores/notification.store";
+import mutationService from "../../services/mutation.service";
 
 const Nav = () => {
   const user = useUserQuery();
@@ -24,7 +24,7 @@ const Nav = () => {
   const filterOrder = useNotificationStore((s) => s.filterOrder);
   const clearNotification = useNotificationStore((s) => s.clearNotification);
 
-  const onSuccess = () => navigate('/auth', { replace: true });
+  const onSuccess = () => navigate("/auth", { replace: true });
   const { mutate } = mutationService.logout(onSuccess);
 
   useShopNotif();
@@ -40,7 +40,7 @@ const Nav = () => {
     <header className="bg-white px-0 md:px-[11px] lg:px-[44px]">
       <Navbar fluid rounded>
         <Link to="/">
-          <h2 className="flex items-center underline gap-2 self-center whitespace-nowrap text-xl font-semibold dark:text-white ">
+          <h2 className="flex items-center gap-2 self-center whitespace-nowrap text-xl font-semibold dark:text-white ">
             <GiHamburger size={25} />
             <span className="text-2xl font-lobster">Litee Snack</span>
           </h2>
@@ -69,7 +69,7 @@ const Nav = () => {
                     <ul className="flex flex-col gap-1">
                       {pendingOrder.map((order) => (
                         <p key={order.orderId}>
-                          New pending order{' '}
+                          New pending order{" "}
                           <span
                             className="font-medium text-rusty-red underline cursor-pointer"
                             onClick={() =>
@@ -82,7 +82,7 @@ const Nav = () => {
                       ))}
                     </ul>
                   ) : (
-                    'No notification yet'
+                    "No notification yet"
                   )}
                   {pendingOrder.length > 0 && (
                     <p
@@ -106,7 +106,7 @@ const Nav = () => {
                   img={
                     user?.image
                       ? user.image
-                      : 'https://static.thenounproject.com/png/4035892-200.png'
+                      : "https://static.thenounproject.com/png/4035892-200.png"
                   }
                   rounded
                 />

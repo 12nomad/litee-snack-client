@@ -7,6 +7,7 @@ import Login from "./screens/auth/login";
 import Signup from "./screens/auth/signup";
 import PasswordReset from "./screens/auth/password-reset";
 import Home from "./screens/main";
+import Landing from "./screens/landing";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="signup" element={<Signup />} />
         <Route path="password-reset" element={<PasswordReset />} />
       </Route>
+      <Route path="/landing" element={<Landing />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

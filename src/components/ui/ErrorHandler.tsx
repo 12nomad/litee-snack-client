@@ -30,7 +30,7 @@ const ErrorHandler = ({ error }: IError) => {
       setCurrentOrderId(0);
       setCurrentShopId(0);
 
-      navigate("/auth", { replace: true });
+      navigate("/landing", { replace: true });
     }
   }, [nestError.message]);
 
