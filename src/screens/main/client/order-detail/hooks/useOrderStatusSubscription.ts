@@ -1,17 +1,18 @@
+import { useEffect, useState } from "react";
 import {
   OrderStatusSubscription,
   OrderStatusSubscriptionVariables,
-} from '../../../../../gql/generated/graphql';
-import { useEffect, useState } from 'react';
-import subscriptionService from '../../../../../services/subscription.service';
+} from "../../../../../gql/generated/graphql";
+import subscriptionService from "../../../../../services/subscription.service";
 
 const useOrderStatusSubscription = (
-  orderInput: OrderStatusSubscriptionVariables,
+  orderInput: OrderStatusSubscriptionVariables
 ): { newStatusSub: OrderStatusSubscription | undefined } => {
   const [newStatusSub, setNewStatusSub] = useState<
     OrderStatusSubscription | undefined
   >(undefined);
 
+  // Apollo Way
   // useSubscription<OrderStatusSubscription, OrderStatusSubscriptionVariables>(
   //   ORDER_STATUS,
   //   {
@@ -20,16 +21,17 @@ const useOrderStatusSubscription = (
   //   },
   // );
 
-  useEffect(() => {
-    const subscription = subscriptionService.orderStatus(
-      orderInput,
-      setNewStatusSub,
-    );
+  // TODO: Disabling Subscription
+  // useEffect(() => {
+  //   const subscription = subscriptionService.orderStatus(
+  //     orderInput,
+  //     setNewStatusSub,
+  //   );
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  //   return () => {
+  //     subscription.unsubscribe();
+  //   };
+  // }, []);
 
   return { newStatusSub };
 };
