@@ -13,9 +13,9 @@ const OrderDetail = () => {
   const { data, isLoading, error } = queryService.orderDetail({
     getOrderInput: { id: params.orderId ? +params.orderId : 0 },
   });
-  const { newStatusSub } = useOrderStatusSubscription({
-    orderStatusInput: { id: params.orderId ? +params.orderId : 0 },
-  });
+  const { newStatusSub } = useOrderStatusSubscription();
+  // useOrderStatusSubscription() input 👇
+  // { orderStatusInput: { id: params.orderId ? +params.orderId : 0 } }
 
   if (isLoading) return <Loading />;
 
