@@ -10,7 +10,7 @@ const StripeTestMode = () => {
           <span className="font-bold">Card Number:</span> 4242 4242 4242 4242
         </li>
         <li>
-          <span className="font-bold">Expiration:</span> 04 / 24
+          <span className="font-bold">Expiration:</span> 04 / 25
         </li>
         <li>
           <span className="font-bold">CVC:</span> 424
