@@ -44,8 +44,4 @@ npm i
 $ npm run dev
 ```
 
-# ❗Litee Snack Client (reactjs client 👉 [Litee Snack Client](https://github.com/12nomad/litee-snack-client)) 
-
-
-
-# Litee Snack Client (nestjs server 👉 [Litee Snack Server](https://github.com/12nomad/litee-snack)) 
+# ❗Litee Snack Server (nestjs server 👉 [Litee Snack Server](https://github.com/12nomad/litee-snack)) 
